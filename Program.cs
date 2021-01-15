@@ -1,58 +1,39 @@
-﻿using System;
-using System.Windows.Forms;
+﻿// Decompiled with JetBrains decompiler
+// Type: iMon.XBMC.Program
+// Assembly: XbmcOniMonVFD, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null
+// MVID: FD635132-6090-4CCA-8BF1-6A9F960CDD3B
+// Assembly location: Z:\Beast\xbmc-on-imon\XbmcOnImonVFD-frodo.v1.0.4ddd\XbmcOnImonVFD\XbmcOniMonVFD.exe
+
+using System;
 using System.Threading;
-using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace iMon.XBMC
 {
-    static class Program
+  internal static class Program
+  {
+    private static Mutex mutex = new Mutex(true, Application.ProductName);
+
+    [STAThread]
+    private static void Main()
     {
-        static Mutex mutex = new Mutex(true, Application.ProductName);
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+      try
+      {
+        if (Program.mutex.WaitOne(TimeSpan.Zero, true))
         {
-            try
-            {
-                if (mutex.WaitOne(TimeSpan.Zero, true))
-                {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new XBMC());
-
-                    mutex.ReleaseMutex();
-                }
-                else
-                {
-                    // send our Win32 message to make the currently running instance
-                    // jump on top of all the other windows
-                    NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Error("Unhandled exception", ex);
-
-                MessageBox.Show("An unhandled exception has occured." + Environment.NewLine +
-                                "Please check the debug/error log for more details", "Unhandled Exception",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+          Application.EnableVisualStyles();
+          Application.SetCompatibleTextRenderingDefault(false);
+          Application.Run((Form) new iMon.XBMC.XBMC());
+          Program.mutex.ReleaseMutex();
         }
-
-        internal class NativeMethods
-        {
-            public const int HWND_BROADCAST = 0xffff;
-
-            public static readonly int WM_SHOWME = RegisterWindowMessage("WM_SHOWME");
-
-            [DllImport("user32")]
-            public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
-
-            [DllImport("user32")]
-            public static extern int RegisterWindowMessage(string message);
-        }
+        else
+          NativeMethods.PostMessage((IntPtr) ((int) ushort.MaxValue), NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
+      }
+      catch (Exception ex)
+      {
+        Logging.Error("Unhandled exception", ex);
+        int num = (int) MessageBox.Show("An unhandled exception has occured." + Environment.NewLine + "Please check the debug/error log for more details", "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+      }
     }
+  }
 }

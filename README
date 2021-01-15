@@ -2,6 +2,28 @@
 *** XBMC on iMON Display ***
 ****************************
 
+UPDATE by Sevenanths (July 2020)
+
+I have updated XBMC on iMON Display for the new decennium. It was not a pleasant experience.  
+For future generations, these are the steps I undertook in order to be able to update the program:
+
+I decompiled the program and all DLLs (libraries) using [DotPeek](https://www.jetbrains.com/decompiler/). It was a Christmas miracle in July that the output was legible, and everything still compiled in Visual Studio. When recompiling, it is important to set the platform target to x86 specifically. Else, the iMon library will cause errors. Target platforms for both the program and its libraries were set to .NET Framework 4.5. 
+
+The NewtonSoft JSON library was replaced by its .NET 4.5 counterpart. Contrary to my expectations, this was a drop-in replacement.
+
+I fixed some decompilation mistakes in XBMC on iMon itself, but these changes were very minor.
+
+More or less all changes were made in the `XBMCJsonRpcSharp` class. In the `XbmcJsonRpcConnection.cs` file, I initialised a websocket connection to Kodi (in 2020, we call XBMC *Kodi* now). The reason why the program didn't work as-is anymore with Kodi 18 was that - for a reason unknown to me - so-called *notifications* from Kodi didn't reach XBMC on iMon anymore. Using websockets, we can still receive these notifications. I used [this websocket wrapper](https://gist.github.com/xamlmonkey/4737291) by Christiaan Coetzer.
+
+In addition, I had to fix what seems like a race condition which prevented the library from hooking to an active player. After the library receives the "Player.OnPlay" event, it immediately calls for an active player to hook to it. In newer versions of Kodi, several "Player.OnAVChange" events follow the "OnPlay" event, and a player is only advertised after these events have occurred. If the program tries to call for an active player immediately, the subsequent events will not yet have been sent, and it will therefore fail to hook. I added a 500ms delay which solved this problem. With the speed at which VFDs update, you will likely not notice this. 
+
+Finally, "Play" and "Pause" states and icons would not work until I hooked the OnResume event in `XbmcJsonRpcConnection.cs`. I don't even know how the program worked without it.
+
+This whole project is terrible and I hate iMon. Please don't ask for support. I will lose my sanity.
+
+---------------
+
+
 Table of Contents
 =================
 1. Hardware Requirements
@@ -86,7 +108,9 @@ Here is a list of a few known issues. Please DO NOT report these as bugs!
  - The iMON Display stays dark after initialization when it is deactivated in
    iMON Manager
  - The progress bar does not adjust correctly when Fast Forwarding / Rewinding
- - The display freezes for a short time when pressing a button on a remote
+ - The display freezes for a short time when pressing a button on a remote. To
+   avoid this disable the "iMON Remote Control Messages" in "iMON Manager" --> 
+   "iMON Utilities" --> "FrontView" --> "Auto mode"
 
 7. Support
 ==========
