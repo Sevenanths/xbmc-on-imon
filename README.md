@@ -1,8 +1,8 @@
-****************************
-*** XBMC on iMON Display ***
-****************************
+# XBMC on iMON Display
 
-UPDATE by Sevenanths (July 2020)
+**UPDATE by Sevenanths (July 2020)**
+
+![Screenshot](docs/screenshot.png)
 
 I have updated XBMC on iMON Display for the new decennium. It was not a pleasant experience.  
 For future generations, these are the steps I undertook in order to be able to update the program:
@@ -23,7 +23,6 @@ This whole project is terrible and I hate iMon. Please don't ask for support. I 
 
 ---------------
 
-
 Table of Contents
 =================
 1. Hardware Requirements
@@ -36,16 +35,15 @@ Table of Contents
 8. Disclaimer
 
 
-1. Hardware Requirements
-========================
+## 1. Hardware Requirements
 To be able to use "XBMC on iMON Display" you need an LCD or VFD from
 Soundgraph's product line "iMON". Soundgraph has not yet provided detailed
 information about the compatibility of different Display versions. If you
 cannot get "XBMC on iMON Display" to show anything on your LCD or VFD,
 please report this so we can help investigate the problem.
 
-2. Software Requirements
-========================
+## 2. Software Requirements
+
  - Windows XP or newer
  - Microsoft .NET Framework 2.0: 
    x86: http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5
@@ -58,14 +56,14 @@ please report this so we can help investigate the problem.
  - XBMC Dharma Beta 1 or newer: http://mirrors.xbmc.org/releases/win32/
 
 
-3.Installation
-==============
+## 3. Installation
+
 There is no real installation. Simply extract all the files into a folder.
 If you want to have a desktop icon, right-click the file called XbmcOniMon.exe
 and choose "Send to" --> "Desktop". 
 
-4. Preparations
-===============
+## 4. Preparations
+
 Before you start "XBMC on iMON Display" you need to make some configurations.
 
 General
@@ -90,8 +88,8 @@ XBMC
 Open XBMC and go into "Settings" --> "Network" --> "Services". Activate the option
 "Allow control of XBMC via HTTP" and enter a Port (Username and Password are optional).
 
-5. Usage
-========
+## 5. Usage
+
 Start "XBMC on iMON Display" simply by double-clicking the XbmcOniMon.exe.
 A window will open up which consists of a menu bar (allowing to manually
 connect/disconnect with/from XBMC and initialize/uninitialize the iMON
@@ -102,8 +100,8 @@ affects the way "XBMC on iMON Display" behaves.
 
 Make sure you provide the correct information to be able to connect with XBMC.
 
-6. Known Issues
-===============
+## 6. Known Issues
+
 Here is a list of a few known issues. Please DO NOT report these as bugs!
  - The iMON Display stays dark after initialization when it is deactivated in
    iMON Manager
@@ -112,13 +110,13 @@ Here is a list of a few known issues. Please DO NOT report these as bugs!
    avoid this disable the "iMON Remote Control Messages" in "iMON Manager" --> 
    "iMON Utilities" --> "FrontView" --> "Auto mode"
 
-7. Support
-==========
+## 7. Support
+
 If you encounter any bug or have a problem using "XBMC on iMON Display" please visit
 the project management site at https://sourceforge.net/apps/trac/xbmc-on-imon/.
 
-8. Disclaimer
-=============
+## 8. Disclaimer
+
 This Program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2, or (at your option)
